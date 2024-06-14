@@ -150,7 +150,7 @@ class _TableEventsExampleState extends State<TableEventsExample> {
                         borderRadius: BorderRadius.circular(12.0),
                       ),
                       child: ListTile(
-                        onTap: () => print('${value[index]}'),
+                        // onTap: () => print('${value[index]}'),
                         title: Text('${value[index]}'),
                       ),
                     );

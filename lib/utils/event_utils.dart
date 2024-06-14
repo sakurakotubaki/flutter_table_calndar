@@ -31,21 +31,30 @@ class EventUtils {
     return snapshot.docs.map((doc) => Event.fromJson(doc.data())).toList();
   }
 
+  // event collectionから全データを取得し、日付ごとにグループ化
   Future<LinkedHashMap<DateTime, List<Event>>> fetchEvents() async {
+    // event collectionから全データを取得
     final events = await getEvents();
+    // eventMapに日付ごとにグループ化
     final eventMap = <DateTime, List<Event>>{};
+    // for文でeventsを回して、eventMapに日付ごとにグループ化
     for (final event in events) {
+      // event.createdAtをDateTime型に変換
       final eventDate = event.createdAt!.toDate();
+      // eventMapに日付ごとにグループ化
       if (eventMap[eventDate] == null) {
+        // eventMapにeventDateがない場合は、[event]をリストで追加
         eventMap[eventDate] = [event];
       } else {
+        // eventMapにeventDateがある場合は、.add(event)でリストに追加
         eventMap[eventDate]!.add(event);
       }
     }
+    // LinkedHashMap<DateTime, List<Event>>を返す
     return LinkedHashMap<DateTime, List<Event>>(
       equals: isSameDay,
       hashCode: getHashCode,
-    )..addAll(eventMap);
+    )..addAll(eventMap); // eventMapを返す
   }
 }
 
